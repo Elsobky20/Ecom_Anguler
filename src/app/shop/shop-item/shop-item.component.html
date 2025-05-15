@@ -1,0 +1,50 @@
+<div class="product-item  card h-100">
+      
+    <!-- صورة المنتج -->
+    <img 
+  *ngIf="product?.photos?.length > 0" 
+  [src]="'https://localhost:44335/' + product.photos[0].imageName" 
+  class="image-top" 
+  alt="">
+
+    <div class="card-body">
+
+      <!-- صور مصغّرة (داخل thumbnails) -->
+      <div class="thumbnails mb-3"> 
+          <img *ngFor="let item of product.photos; let i = index" [src]="'https://localhost:44335/' + item.imageName" />
+      </div>
+
+      <!-- اسم المنتج -->
+      <h5 class="card-title">{{product.name}}</h5>
+
+      <!-- وصف مختصر -->
+      <p class="card-text">{{product.description}}</p>
+
+      <!-- السعر -->
+      <p class="price">
+        <span class="old-price">{{ product.oldPrice| currency }}</span> <!-- السعر القديم -->
+        {{ product.newPrice| currency }} <!-- السعر الحالي -->
+      </p>
+
+      <!-- التقييم -->
+      <div class="rating mb-3">...</div>
+
+      <!-- زر الإضافة للمفضلة -->
+      <button class="btn btn-outline-primary favorite-icon">
+        <i class="fa fa-bookmark"></i>
+      </button>
+
+      <!-- زر الإضافة إلى السلة -->
+      <div class="d-flex justify-content-between align-items-start">
+        <button class="btn btn-dark">
+          <i class="fa fa-shopping-cart"></i> Add to Cart
+        </button>
+      </div>
+
+      <!-- زر التفاصيل -->
+      <button routerLink="/product-details/{{product.id}}" class="btn btn-success">
+        <i class="fa fa-info-circle"></i> Details
+      </button>
+
+    </div>
+  </div>
