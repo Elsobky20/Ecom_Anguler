@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductDetailsComponent  implements OnInit{
 constructor( private shopService: ShopService , private route:ActivatedRoute){}
 product:IProduct
+mainImage:string ;
   ngOnInit(): void {
     this.loadProduct()
   }
@@ -21,7 +22,11 @@ product:IProduct
       next:((value:IProduct)=>
       {
         this.product =value
+        this.mainImage = this.product.photos[0].imageName
       })
     })
+  }
+  ReplaceImage(src:string){
+    this.mainImage=src
   }
 }

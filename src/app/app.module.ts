@@ -5,10 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ShopModule } from './shop/shop.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from "./home/home.module";
+import { loaderInterceptor } from './core/nav-bar/Interceptor/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,20 @@ import { HomeModule } from "./home/home.module";
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    ShopModule,
-    HomeModule
+    HomeModule ,
+    NgxSpinnerModule ,
+     ToastrModule.forRoot({
+      closeButton:true ,
+      positionClass:'toast-top-right',
+      countDuplicates:true, 
+      timeOut:1500,
+      progressBar:true
+     })
 ],
   providers: [
     provideClientHydration(withEventReplay()),
-    provideHttpClient()
+    provideHttpClient(withInterceptorsFromDi()) , 
+    {provide:HTTP_INTERCEPTORS,useClass:loaderInterceptor ,multi :true},
   ],
   bootstrap: [AppComponent]
 })

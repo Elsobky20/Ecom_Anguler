@@ -3,6 +3,7 @@ import { ShopService } from '../shop/shop.service'
 import { IProduct } from '../shared/Models/Product';
 import { IPagination } from '../shared/Models/Pagination';
 import { ProductParam } from '../shared/Models/Product-params'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shop',
@@ -21,7 +22,7 @@ export class ShopComponent implements OnInit {
     { name: 'Price: min-max', value: 'PriceAsc' },
     { name: 'Price: max-min', value: 'PriceDesc' }
   ];
-  constructor(private shopService: ShopService) { }
+  constructor(private shopService: ShopService , private toast:ToastrService) { }
 
   ngOnInit(): void {
     this.getAllProduct()
@@ -36,6 +37,7 @@ export class ShopComponent implements OnInit {
         this.totalCount = value.totalCount
         this.productParam.pageNumber = value.pageNumber
         this.productParam.pageSize = value.pageSize
+        this.toast .success("product loaded successfully","SUCCESS")
       })
     })
   }

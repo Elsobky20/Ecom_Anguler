@@ -2,6 +2,9 @@
 text-align: center;
 }
 
+::ng-deep .ngxImageZoomContainer > img{
+    max-height: 300px;
+}
 .similar-product img{
     border: 2px solid #ddd;
     padding: 5px;
@@ -52,7 +55,4 @@ width: 70px;
 .details-title{
 font-size: 1.3rem;
 color: #ff6347;
-}
-::ng-deep .ngxImageZoomCentainer > img{
-    max-height: 300px;
 }
