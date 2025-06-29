@@ -24,7 +24,10 @@
                 <li class="nav-item"><a href="" class="nav-link">
                        
                     </a></li>
-                    <li class="nav-item"><a class="nav-link" routerLink="Basket" routerLink="/basket"><i class="material-icons">shopping_cart</i></a> </li>
+                    <li class="nav-item"><a class="nav-link" routerLink="Basket" routerLink="/basket">
+                        <i  matBadge="{{(count|async).basketItem.length}}" class="material-icons">shopping_cart</i>
+                    </a>
+                 </li>
 
                 <li class="nav-item">
                     <a (click)="ToggleDropDown()" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" 
