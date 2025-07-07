@@ -61,5 +61,6 @@ export class ProductDetailsComponent implements OnInit {
 return parseFloat(Math.round(((oldPrice-NewPrice)/oldPrice)*100).toFixed(1)
 )
 
+
   }
 }
