@@ -25,7 +25,9 @@
                        
                     </a></li>
                     <li class="nav-item"><a class="nav-link" routerLink="Basket" routerLink="/basket">
-                        <i  matBadge="{{(count|async).basketItem.length}}" class="material-icons">shopping_cart</i>
+                        <i *ngIf="(count | async)?.basketItem?.length >= 0"
+   [matBadge]="(count | async)?.basketItem?.length"
+   class="material-icons">shopping_cart</i>
                     </a>
                  </li>
 
@@ -36,8 +38,8 @@
     
                     </a>
                     <div [ngClass]="{'show':visibale}" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> 
-                        <a class="dropdown-item" routerLink="">Register <i class="fa fa-plus"></i></a>
-                        <a class="dropdown-item"routerLink="">Login <i class="fa fa-sign-in"></i></a>
+                        <a class="dropdown-item"routerLink="/Account/Register">Register <i class="fa fa-plus"></i></a>
+                        <a class="dropdown-item"routerLink="/Account/Login">Login <i class="fa fa-sign-in"></i></a>
                         <a class="dropdown-item"routerLink="">My Order <i class="fa fa-list"></i></a>
                     </div>
                 </li>   
