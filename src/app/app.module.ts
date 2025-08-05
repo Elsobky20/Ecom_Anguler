@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from "./home/home.module";
 import { loaderInterceptor } from './core/nav-bar/Interceptor/loader.interceptor';
+import { credentialsInterceptor } from './core/Interceptor/credentials.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { loaderInterceptor } from './core/nav-bar/Interceptor/loader.interceptor
     provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptorsFromDi()) , 
     {provide:HTTP_INTERCEPTORS,useClass:loaderInterceptor ,multi :true},
+    {provide:HTTP_INTERCEPTORS,useClass:credentialsInterceptor ,multi :true},
   ],
   bootstrap: [AppComponent]
 })

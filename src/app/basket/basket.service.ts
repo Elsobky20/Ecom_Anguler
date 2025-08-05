@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { Basket, IBasket, IBasketItem, IBasketTotal } from '../shared/Models/Basket';
 import { IProduct } from '../shared/Models/Product';
+import { Delivery } from '../shared/Models/Delivery';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,39 @@ export class BasketService {
   baske$ = this.basketSourse.asObservable();
   private basketSourseTotal = new BehaviorSubject<IBasketTotal>(null);
   baskeTotal$ = this.basketSourseTotal.asObservable();
+  shipPrice:number = 0;
+  setShippingPrice(delivery:Delivery) {
+    this.shipPrice = delivery.price;
+    this.calcualateTotal();
+  }
+
+   CreatePaymentIntent(deliveryMethodId: number = 3) {
+    console.log(this.GetCurrentValue().id);
+    return this.http
+      .post(
+        this.baseURL +
+          `Payments/Create?basketId=${
+            this.GetCurrentValue().id
+          }&deliveryId=${deliveryMethodId}`,
+        {}
+      )
+      .pipe(
+        map((value: IBasket) => {
+          this.basketSourse.next(value);
+          console.log('test:', value);
+        })
+      );
+  }
+  
+  deleteBasket() {
+    var basket: IBasket;
+    this.basketSourse.next(basket);
+    this.basketSourseTotal.next(null);
+    localStorage.removeItem('basketId');
+  }
   calcualateTotal() {
     const basket = this.GetCurrentValue();
-    const shipping = 0
+    const shipping = this.shipPrice;
     const subTotal = basket.basketItem.reduce((a, c) => {
       return (c.price * c.quentity) + a
     }, 0)
@@ -53,8 +84,12 @@ export class BasketService {
 
   addItemToBasket(product: IProduct, quantity: number = 1) {
     const itemToAdd: IBasketItem = this.MapPrpductToBasketItem(product, quantity);
+    debugger
     let basket = this.GetCurrentValue()
-    if (basket.id == null) {
+    console.log(basket)
+      
+    if (!basket||basket?.id=='null') {
+      
       basket = this.CreateBasket();
     }
 
@@ -75,6 +110,7 @@ export class BasketService {
 
   private CreateBasket(): IBasket {
     const basket = new Basket();
+    console.log(basket)
     localStorage.setItem('basketId', basket.id);
     return basket;
   }
